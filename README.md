@@ -1,4 +1,4 @@
-SPSC
+spsc
 ====
 
-Smart Position and Speed Control
+Under development
