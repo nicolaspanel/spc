@@ -1,4 +1,4 @@
-spsc
+Smart Position Control
 ====
 
 Under development
