@@ -107,9 +107,9 @@ module.exports = function (grunt) {
       ],
       test: {
         options: {
-          jshintrc: 'test/karma/.jshintrc'
+          jshintrc: 'test/.jshintrc'
         },
-        src: ['test/karma/spec/{,*/}*.js']
+        src: ['test/karma/spec/{,*/}*.js', 'test/mocha/{,*/}*.js']
       }
     },
 
@@ -344,6 +344,9 @@ module.exports = function (grunt) {
     // },
 
     // Test settings
+    mochaTest: {
+      files: [ 'test/mocha/*.test.js']
+    },
     karma: {
       unit: {
         configFile: 'karma.conf.js',
@@ -381,7 +384,12 @@ module.exports = function (grunt) {
     'clean:server',
     'concurrent:test',
     'autoprefixer',
-    'karma'
+    'karma',
+    'mochaTest'
+  ]);
+
+  grunt.registerTask('testMocha', [
+    'mochaTest'
   ]);
 
   grunt.registerTask('build', [
@@ -410,4 +418,6 @@ module.exports = function (grunt) {
     'test',
     'build'
   ]);
+  grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-mocha-test'); 
 };
