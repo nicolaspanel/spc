@@ -1,18 +1,24 @@
-<div ng-include="'partials/navbar'"></div>
+<!-- <div ng-include="'partials/navbar'"></div> -->
 
 <div class="jumbotron">
   <h1>Smart Position Control</h1>
   <p class="lead">
     Provide optimal position control using Q-Learning agent.
   </p>
-  <h3>System state : <b>{{state}}</b></h3>
-  <p class="lead">
-    Available actions :
-    <div ng-repeat="action in availableActions">
-      <a  href="" class="btn btn-lg btn-success" ng-click="executeAction(action)">{{action}}</a>
-  </div> 
-  </p>
   <!-- <p><a class="btn btn-lg btn-success" ng-href="#">Splendid!</a></p> -->
+</div>
+<div class="panel panel-default">
+  <div class="panel-heading">System state : <b>{{state}}</b></div>
+  <table class="table">
+    <tr  ng-repeat="action in availableActions"> 
+      <td>
+        <a href="" class="btn btn-sm  btn-{{action.type}}" ng-click="executeAction(action.name)">{{action.name | capitalize}}</a>
+      </td> 
+      <td>
+        <span>{{action.description}}</span>
+      </td>
+    </tr>
+  </table>
 </div>
 
 <div class="footer">

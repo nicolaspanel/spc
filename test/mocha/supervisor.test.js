@@ -15,7 +15,8 @@ describe('supervisor', function () {
   });
 
   it('should only enable \'initialize\' action' ,function() {
-    supervisor.availableActions().should.eql(['initialize']);
+    supervisor.availableActions().length.should.equal(1);
+    supervisor.availableActions()[0].name.should.equal('initialize');
   });
 
   it('should raise an event when state change' ,function(done) {
