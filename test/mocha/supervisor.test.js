@@ -14,6 +14,10 @@ describe('supervisor', function () {
     supervisor.state().should.eql('NEWBORN');
   });
 
+  it('should only enable \'initialize\' action' ,function() {
+    supervisor.availableActions().should.eql(['initialize']);
+  });
+
   it('should raise an event when state change' ,function(done) {
     supervisor.once('state-changed', function(){
       done();

@@ -5,5 +5,15 @@ angular.module('webApp')
     $http.get('/api/awesomeThings').success(function(awesomeThings) {
       $scope.awesomeThings = awesomeThings;
     });
+    $http.get('/api/state').success(function(res) {
+      $scope.state = res.state;
+      $scope.availableActions = res.actions;
+    });
     $scope.year = new Date().getFullYear();
+    
+    $scope.executeAction = function(action){
+        $http.get('/api/execute?action=' + action).success(function(res) {
+          
+        });
+    };
   });
