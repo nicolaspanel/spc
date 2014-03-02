@@ -9,5 +9,6 @@
   "noarg": true,
   "regexp": true,
   "undef": true,
+  "unused": false,
   "smarttabs": true
 }

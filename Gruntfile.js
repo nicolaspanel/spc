@@ -100,11 +100,9 @@ module.exports = function (grunt) {
         options: {
           jshintrc: 'lib/.jshintrc'
         },
-        src: [ 'lib/{,*/}*.js']
+        src: [ 'lib/{,*/}*.js', 'lib/spc_lib/*.js']
       },
-      all: [
-        '<%= yeoman.app %>/scripts/{,*/}*.js'
-      ],
+      all: ['gruntfile.js', '<%= yeoman.app %>/scripts/{,*/}*.js'],
       test: {
         options: {
           jshintrc: 'test/.jshintrc'
@@ -345,7 +343,12 @@ module.exports = function (grunt) {
 
     // Test settings
     mochaTest: {
-      files: [ 'test/mocha/*.test.js']
+      test: {
+        options: {
+          reporter: 'spec'
+        },
+        src: ['test/mocha/**/*.js']
+      }
     },
     karma: {
       unit: {
@@ -354,6 +357,9 @@ module.exports = function (grunt) {
       }
     }
   });
+
+  grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-mocha-test'); 
 
   grunt.registerTask('express-keepalive', 'Keep grunt running', function() {
     this.async();
@@ -380,17 +386,16 @@ module.exports = function (grunt) {
     grunt.task.run(['serve']);
   });
 
+  grunt.registerTask('testm', ['jshint:test', 'jshint:server', 'mochaTest']);
+
   grunt.registerTask('test', [
+    'testm',
     'clean:server',
     'concurrent:test',
     'autoprefixer',
-    'karma',
-    'mochaTest'
+    'karma'
   ]);
 
-  grunt.registerTask('testMocha', [
-    'mochaTest'
-  ]);
 
   grunt.registerTask('build', [
     'clean:dist',
@@ -418,6 +423,4 @@ module.exports = function (grunt) {
     'test',
     'build'
   ]);
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-mocha-test'); 
 };
