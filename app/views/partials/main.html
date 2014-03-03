@@ -12,7 +12,7 @@
   <table class="table">
     <tr  ng-repeat="action in availableActions"> 
       <td>
-        <a href="" class="btn btn-sm  btn-{{action.type}}" ng-click="executeAction(action.name)">{{action.name | capitalize}}</a>
+        <a href="" ng-disabled="isLoading" class="btn btn-sm  btn-{{action.type}}" ng-click="executeAction(action.name)">{{action.name | capitalize}}</a>
       </td> 
       <td>
         <span>{{action.description}}</span>

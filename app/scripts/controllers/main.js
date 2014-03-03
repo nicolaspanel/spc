@@ -1,17 +1,29 @@
 'use strict';
 
 angular.module('webApp')
-  .controller('MainCtrl', function ($scope, $http) {
+  .controller('MainCtrl', function ($scope, $http, socket) {
     
-    $http.get('/api/state').success(function(res) {
-      $scope.state = res.state;
-      $scope.availableActions = res.actions;
-    });
     $scope.year = new Date().getFullYear();
+
+    $scope.isLoading = true;
+
+    $http.get('/api/state').success(function(data) {
+      $scope.state = data.state;
+      $scope.availableActions = data.actions;
+      $scope.isLoading = false;
+    });
+    
     
     $scope.executeAction = function(action){
-        $http.get('/api/execute?action=' + action).success(function(res) {
-          
-        });
+      $scope.isLoading = true;
+      $http.get('/api/execute?action=' + action).success(function(data) {
+        
+      });
     };
+
+    socket.on('state-changed', function(data) {
+      $scope.state = data.state;
+      $scope.availableActions = data.actions;
+      $scope.isLoading = false;
+    });
   });

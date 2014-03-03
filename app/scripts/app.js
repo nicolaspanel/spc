@@ -4,7 +4,10 @@ angular.module('webApp', [
   'ngCookies',
   'ngResource',
   'ngSanitize',
-  'ngRoute'
+  'ngRoute',
+
+  // 3rd party dependencies
+  'btford.socket-io'
 ])
   .config(function ($routeProvider, $locationProvider) {
     $routeProvider
@@ -20,6 +23,8 @@ angular.module('webApp', [
   })
   .filter('capitalize', function() {
     return function(input, scope) {
-        return input.substring(0,1).toUpperCase()+input.substring(1);
-    }
+      return input.substring(0,1).toUpperCase()+input.substring(1);
+    };
+  }).factory('socket', function (socketFactory) {
+    return socketFactory();
   });

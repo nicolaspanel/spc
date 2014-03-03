@@ -11,7 +11,8 @@
     "ejs": "~0.8.4",
     "underscore": "~1.6.0",
     "stately.js": "~1.2.0",
-    "string": "~1.8.0"
+    "string": "~1.8.0",
+    "socket.io": "~0.9.16"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

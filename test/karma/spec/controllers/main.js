@@ -6,11 +6,12 @@ describe('Controller: MainCtrl', function () {
   beforeEach(module('webApp'));
 
   var MainCtrl,
-    scope,
-    $httpBackend;
+      scope,
+      $httpBackend,
+      mockIoSocket;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function (_$httpBackend_, $controller, $rootScope) {
+  beforeEach(inject(function (socket, _$httpBackend_, $controller, $rootScope) {
     $httpBackend = _$httpBackend_;
     $httpBackend.expectGET('/api/state')
       .respond({
@@ -21,6 +22,7 @@ describe('Controller: MainCtrl', function () {
     MainCtrl = $controller('MainCtrl', {
       $scope: scope
     });
+    mockIoSocket = socket;
   }));
 
   it('should define the current state to the scope', function () {
