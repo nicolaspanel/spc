@@ -7,8 +7,7 @@ describe('Controller: MainCtrl', function () {
 
   var MainCtrl,
       scope,
-      $httpBackend,
-      mockIoSocket;
+      $httpBackend;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function (socket, _$httpBackend_, $controller, $rootScope) {
@@ -22,7 +21,6 @@ describe('Controller: MainCtrl', function () {
     MainCtrl = $controller('MainCtrl', {
       $scope: scope
     });
-    mockIoSocket = socket;
   }));
 
   it('should define the current state to the scope', function () {
