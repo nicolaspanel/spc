@@ -1,13 +1,12 @@
 'use strict';
 
 var should = require('should'),
-    SPCSupervisor = require('../../lib/spc_lib/supervisor');
-
+    spc = require('../../lib/spc');
 
 describe('supervisor', function () {
   var supervisor = null;
   beforeEach(function() {
-    supervisor = new SPCSupervisor.Supervisor();
+    supervisor = new spc.Supervisor();
   });
 
   it('should be in \'NEWBORN\' state' ,function() {
