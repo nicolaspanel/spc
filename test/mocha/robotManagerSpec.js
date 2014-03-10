@@ -72,4 +72,26 @@ describe('RobotManager', function () {
     });
   });
   
+  it('should raise the new position when board raise new encoder position', function(done){
+    robot.on('position-changed', function(position){
+      position.should.equal(0);
+      done();
+    });
+    board.emit('encoder-report-0', 0);
+  });
+  describe('when set position to -5mm', function()
+  {
+    beforeEach(function() {
+      robot.setPosition(-5e-3);
+    });
+    it('should manage the offset', function(done){
+      robot.on('position-changed', function(position){
+        position.should.equal(-5e-3);
+        done();
+      });
+      board.emit('encoder-report-0', 0);
+    });
+  });
+  
+  
 });
