@@ -12,4 +12,8 @@ describe('ParkController', function () {
   it('should be named \'park-ctrl\'', function(){
     ctrl.name.should.equal('park-ctrl');
   });
+
+  it('should be able to handle new states', function(){
+    
+  });
 });

@@ -67,7 +67,9 @@ describe('supervisor', function () {
         });
       });
     });
-
+    it('should use ParkController', function() {
+      supervisor.controller.name.should.equal('park-ctrl');
+    });
     it('can be disconnected', function(done) {
       supervisor.once('disconnected', function () {
         supervisor.state().should.eql('NEWBORN');
