@@ -8,6 +8,13 @@ var should = require('should'),
 describe('RobotManager', function () {
   var robot = null;
   var board = null;
+  var encoderPinA = 2;
+  var encoderPinB = 3;
+  var dirPin1 = 7;
+  var dirPin2 = 8;
+  var pwmPin = 6;
+  var inputPin = 4;
+  
   beforeEach(function() {
     board = new mocks.Board();
     robot = new spc.RobotManager(board);
@@ -27,14 +34,21 @@ describe('RobotManager', function () {
         done();
       });
     });
-    it('should call board#attachEncoder ', function(){
-      board.attachEncoder.calledWith(0, 2, 3).should.be.true;
+    it('should attach encoder ', function(){
+      board.attachEncoder.calledWith(0, encoderPinA, encoderPinB).should.be.true;
     });
-    it('should call board#setSamplingInterval ', function(){
+    it('should set SamplingInterval to 50ms', function(){
       board.setSamplingInterval.calledWith(50).should.be.true;
     });
-    it('should call board#pinMode(4, PWM) ', function(){
-      board.pinMode.calledWith(4, 0x03).should.be.true;
+    it('should set dir pins as outputs', function(){
+      board.pinMode.calledWith(dirPin1, 0x01).should.be.true;
+      board.pinMode.calledWith(dirPin2, 0x01).should.be.true;
+    });
+    it('should set pwm pin as PWM', function(){
+      board.pinMode.calledWith(pwmPin, 0x03).should.be.true;
+    });
+    it('should set input_pin as INPUT pin', function(){
+      board.pinMode.calledWith(inputPin, 0x00).should.be.true;
     });
     it('should have enabled reports', function(){
       board.toggleEncodersPositionsReports.calledWith(true).should.be.true;
@@ -42,33 +56,44 @@ describe('RobotManager', function () {
     it('should be defined as initialized', function(){
       robot.isInitialized().should.be.true;
     });
+    it('should not be at the end stop', function(){
+      robot.isAtEndStop().should.be.false;
+    });
   });
-  describe('when update voltage', function()
-  {
+  
+  describe('when update voltage to 0', function(){
+
     beforeEach(function() {
       board.analogWrite = sinon.spy();
-    });
-    it('should send 0 when voltage is 0v', function(){
+      board.digitalWrite = sinon.spy();
       robot.setVoltage(0);
-      board.analogWrite.calledWith(4, 0).should.be.true;
     });
     
-    it('should send 128 when voltage is 6v', function(){
-      robot.setVoltage(6);
-      board.analogWrite.calledWith(4, 128).should.be.true;
+    it('should not have update PWM pin value', function(){
+      sinon.assert.notCalled(board.analogWrite);
     });
     
-    it('should send 0 when voltage is -1v', function(){
-      robot.setVoltage(-1);
-      board.analogWrite.calledWith(4, 0).should.be.true;
+    it('should not have update DIR pin 1/2 value', function(){
+      sinon.assert.notCalled(board.digitalWrite);
     });
-    it('should send 255 when voltage is 12v', function(){
-      robot.setVoltage(12);
-      board.analogWrite.calledWith(4, 255).should.be.true;
+    
+  });
+
+  describe('when update voltage to -6v', function(){
+
+    beforeEach(function() {
+      board.analogWrite = sinon.spy();
+      board.digitalWrite = sinon.spy();
+      robot.setVoltage(-6);
     });
-    it('should send 255 when voltage is 13v', function(){
-      robot.setVoltage(13);
-      board.analogWrite.calledWith(4, 255).should.be.true;
+    it('should have updated PWM  pin value to 128', function(){
+      board.analogWrite.calledWith(pwmPin, 128).should.be.true;
+    });
+    it('should have updated DIR1  value to LOW', function(){
+      board.digitalWrite.calledWith(dirPin1, 0).should.be.true;
+    });
+    it('should have updated DIR2  value to HIGH', function(){
+      board.digitalWrite.calledWith(dirPin2, 1).should.be.true;
     });
   });
   
@@ -93,5 +118,11 @@ describe('RobotManager', function () {
       board.emit('encoder-report-0', 0);
     });
   });
-  
+
+  it('should raise \'reach-end-stop\' when end stop pressed', function(done){
+    robot.on('reach-end-stop', function(){
+      done();
+    });
+    board.emit('digital-read-' + inputPin, 0);
+  });
 });
