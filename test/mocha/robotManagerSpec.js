@@ -26,10 +26,6 @@ describe('RobotManager', function () {
   describe('during initialization', function()
   {
     beforeEach(function(done) {
-      board.attachEncoder = sinon.spy();
-      board.setSamplingInterval = sinon.spy();
-      board.toggleEncodersPositionsReports = sinon.spy();
-      board.pinMode = sinon.spy();
       robot.initialize(function(){
         done();
       });
@@ -64,8 +60,6 @@ describe('RobotManager', function () {
   describe('when update voltage to 0', function(){
 
     beforeEach(function() {
-      board.analogWrite = sinon.spy();
-      board.digitalWrite = sinon.spy();
       robot.setVoltage(0);
     });
     
@@ -82,8 +76,6 @@ describe('RobotManager', function () {
   describe('when update voltage to -6v', function(){
 
     beforeEach(function() {
-      board.analogWrite = sinon.spy();
-      board.digitalWrite = sinon.spy();
       robot.setVoltage(-6);
     });
     it('should have updated PWM  pin value to 128', function(){

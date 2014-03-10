@@ -1,11 +1,14 @@
 'use strict';
 
 var should = require('should'),
-    spc = require('../../lib/spc');
+    spc = require('../../lib/spc'),
+    mocks = require('./mocks');
 
 describe('supervisor', function () {
   var supervisor = null;
+  var board = null;
   beforeEach(function() {
+    board = new mocks.Board();
     supervisor = new spc.Supervisor();
   });
 
@@ -22,18 +25,18 @@ describe('supervisor', function () {
     supervisor.once('state-changed', function(){
       done();
     });
-    supervisor.initialize();
+    supervisor.initialize(board);
   });
   
   it('should send a connected message when initialized' ,function(done) {
-    supervisor.initialize(function() {
+    supervisor.initialize(board, function() {
       done();
     });
   });
 
   describe('when initialized', function(){
     beforeEach(function(done) {
-      supervisor.initialize(function() {
+      supervisor.initialize(board, function() {
         done();
       });
     });
@@ -61,7 +64,7 @@ describe('supervisor', function () {
 
   describe('when parked', function(){
     beforeEach(function(done) {
-      supervisor.initialize(function() {
+      supervisor.initialize(board, function() {
         supervisor.park(function() {
           done();
         });
@@ -95,7 +98,7 @@ describe('supervisor', function () {
 
   describe('when training', function(){
     beforeEach(function(done) {
-      supervisor.initialize(function() {
+      supervisor.initialize(board, function() {
         supervisor.park(function() {
           supervisor.train(function() {
             done();
@@ -121,7 +124,7 @@ describe('supervisor', function () {
 
   describe('when tracking', function(){
     beforeEach(function(done) {
-      supervisor.initialize(function() {
+      supervisor.initialize(board, function() {
         supervisor.park(function() {
           supervisor.track(function() {
             done();
