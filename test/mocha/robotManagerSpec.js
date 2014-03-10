@@ -79,7 +79,8 @@ describe('RobotManager', function () {
     });
     board.emit('encoder-report-0', 0);
   });
-  describe('when set position to -5mm', function()
+  
+  describe('when set inital position to -5mm', function()
   {
     beforeEach(function() {
       robot.setPosition(-5e-3);
@@ -92,6 +93,5 @@ describe('RobotManager', function () {
       board.emit('encoder-report-0', 0);
     });
   });
-  
   
 });
