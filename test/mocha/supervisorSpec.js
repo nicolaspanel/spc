@@ -2,14 +2,15 @@
 
 var should = require('should'),
     spc = require('../../lib/spc'),
-    mocks = require('./mocks');
+    mocks = require('./mocks'),
+    sinon = require('sinon');
 
 describe('supervisor', function () {
   var supervisor = null;
-  var board = null;
+  var robot = null;
   beforeEach(function() {
-    board = new mocks.Board();
-    supervisor = new spc.Supervisor();
+    robot = new mocks.Robot();
+    supervisor = new spc.Supervisor(robot);
   });
 
   it('should be in \'NEWBORN\' state' ,function() {
@@ -25,18 +26,27 @@ describe('supervisor', function () {
     supervisor.once('state-changed', function(){
       done();
     });
-    supervisor.initialize(board);
+    supervisor.initialize();
   });
   
   it('should send a connected message when initialized' ,function(done) {
-    supervisor.initialize(board, function() {
+    supervisor.once('connected', function(){
+      done();
+    });
+    supervisor.initialize();
+  });
+
+  it('should initialize the robot if not already' ,function(done) {
+    var spy = sinon.spy(robot, 'initialize');
+    supervisor.initialize(function() {
+      spy.calledOnce.should.be.true;
       done();
     });
   });
 
   describe('when initialized', function(){
     beforeEach(function(done) {
-      supervisor.initialize(board, function() {
+      supervisor.initialize( function() {
         done();
       });
     });
@@ -64,7 +74,7 @@ describe('supervisor', function () {
 
   describe('when parked', function(){
     beforeEach(function(done) {
-      supervisor.initialize(board, function() {
+      supervisor.initialize(function() {
         supervisor.park(function() {
           done();
         });
@@ -98,7 +108,7 @@ describe('supervisor', function () {
 
   describe('when training', function(){
     beforeEach(function(done) {
-      supervisor.initialize(board, function() {
+      supervisor.initialize(function() {
         supervisor.park(function() {
           supervisor.train(function() {
             done();
@@ -124,7 +134,7 @@ describe('supervisor', function () {
 
   describe('when tracking', function(){
     beforeEach(function(done) {
-      supervisor.initialize(board, function() {
+      supervisor.initialize(function() {
         supervisor.park(function() {
           supervisor.track(function() {
             done();

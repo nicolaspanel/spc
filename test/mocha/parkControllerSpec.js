@@ -13,7 +13,25 @@ describe('ParkController', function () {
     ctrl.name.should.equal('park-ctrl');
   });
 
-  it('should be able to handle new states', function(){
-    
+  it('should use \'pid-regulator\'', function(){
+    ctrl.regulator.name.should.equal('pid-regulator');
+  });
+
+  describe('when receive current position', function() {
+    it('should update voltage to zero if robot already parked', function(done){
+      ctrl.once('update-voltage', function(voltage){
+        voltage.should.equal(0);
+        done();
+      });
+      ctrl.handlePosition(0);
+    });
+
+    // it('should apply negative voltage if robot\'s postion is above park position', function(done){
+    //   ctrl.once('update-voltage', function(voltage){
+    //     voltage.should.be.lessThan(0);
+    //     done();
+    //   });
+    //   ctrl.handlePosition(0.1);
+    // });
   });
 });
