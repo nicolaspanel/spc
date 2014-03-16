@@ -5,7 +5,7 @@ var should = require('should'),
     mocks = require('./mocks'),
     sinon = require('sinon');
 
-describe('RobotManager', function () {
+describe('Robot', function () {
   var robot = null;
   var board = null;
   var encoderPinA = 2;
@@ -17,7 +17,7 @@ describe('RobotManager', function () {
   
   beforeEach(function() {
     board = new mocks.Board();
-    robot = new spc.RobotManager(board);
+    robot = new spc.Robot(board);
   });
   it('should not be initialized', function(){
     robot.isInitialized().should.be.false;

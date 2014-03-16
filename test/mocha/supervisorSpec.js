@@ -10,7 +10,8 @@ describe('supervisor', function () {
   var robot = null;
   beforeEach(function() {
     robot = new mocks.Robot();
-    supervisor = new spc.Supervisor(robot);
+    supervisor = new spc.Supervisor();
+    supervisor.attachRobot(robot);
   });
 
   it('should be in \'NEWBORN\' state' ,function() {
@@ -57,14 +58,23 @@ describe('supervisor', function () {
 
 
     it('should use the \'do-nothing\' controller', function() {
-      supervisor.controller.name.should.eql('do-nothing-ctrl');
+      supervisor.controller.name.should.eql('.do-nothing');
     });
+    
     it('should be able to park', function(done) {
       supervisor.once('parked', function () {
         supervisor.state().should.eql('PARKED');
         done();
       });
       supervisor.park();
+    });
+
+    it('should emit new robot positions', function(done) {
+      supervisor.on('robot-state-changed', function(state) {
+        state.position.should.equal(0.0123);
+        done();
+      });
+      robot.emit('position-changed', 0.0123);
     });
     
     it('can be disconnected', function(done) {
@@ -89,7 +99,7 @@ describe('supervisor', function () {
       supervisor.state().should.eql('PARKED');
     });
     it('should use ParkController', function() {
-      supervisor.controller.name.should.equal('park-ctrl');
+      supervisor.controller.name.should.equal('.park');
     });
     it('can be disconnected', function(done) {
       supervisor.once('disconnected', function () {

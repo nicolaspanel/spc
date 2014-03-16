@@ -9,8 +9,8 @@ describe('ParkController', function () {
   beforeEach(function() {
     ctrl = new spc.ParkController();
   });
-  it('should be named \'park-ctrl\'', function(){
-    ctrl.name.should.equal('park-ctrl');
+  it('should be named \'.park\'', function(){
+    ctrl.name.should.equal('.park');
   });
 
   it('should use \'pid-regulator\'', function(){
@@ -19,19 +19,10 @@ describe('ParkController', function () {
 
   describe('when receive current position', function() {
     it('should update voltage to zero if robot already parked', function(done){
-      ctrl.once('update-voltage', function(voltage){
+      ctrl.handlePosition(0, function(voltage){
         voltage.should.equal(0);
         done();
       });
-      ctrl.handlePosition(0);
     });
-
-    // it('should apply negative voltage if robot\'s postion is above park position', function(done){
-    //   ctrl.once('update-voltage', function(voltage){
-    //     voltage.should.be.lessThan(0);
-    //     done();
-    //   });
-    //   ctrl.handlePosition(0.1);
-    // });
   });
 });
