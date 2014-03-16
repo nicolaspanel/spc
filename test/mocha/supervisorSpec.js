@@ -18,6 +18,22 @@ describe('supervisor', function () {
     supervisor.state().should.eql('NEWBORN');
   });
 
+  it('should use the \'do-nothing\' controller', function() {
+    supervisor.controller.name.should.eql('do-nothing-ctrl');
+  });
+
+  it('should be able to return it\'s full state' ,function() {
+    supervisor.fullState().should.eql({
+        state: 'Newborn',
+        controller: 'Do nothing ctrl',
+        actions: [{
+          name: 'initialize',
+          description: 'Connect the board',
+          type:   'primary'
+        }]
+      });
+  });
+
   it('should only enable \'initialize\' action' ,function() {
     supervisor.availableActions().length.should.equal(1);
     supervisor.availableActions()[0].name.should.equal('initialize');
@@ -58,7 +74,7 @@ describe('supervisor', function () {
 
 
     it('should use the \'do-nothing\' controller', function() {
-      supervisor.controller.name.should.eql('.do-nothing');
+      supervisor.controller.name.should.eql('do-nothing-ctrl');
     });
     
     it('should be able to park', function(done) {
@@ -67,14 +83,6 @@ describe('supervisor', function () {
         done();
       });
       supervisor.park();
-    });
-
-    it('should emit new robot positions', function(done) {
-      supervisor.on('robot-state-changed', function(state) {
-        state.position.should.equal(0.0123);
-        done();
-      });
-      robot.emit('position-changed', 0.0123);
     });
     
     it('can be disconnected', function(done) {
@@ -99,7 +107,7 @@ describe('supervisor', function () {
       supervisor.state().should.eql('PARKED');
     });
     it('should use ParkController', function() {
-      supervisor.controller.name.should.equal('.park');
+      supervisor.controller.name.should.equal('park-ctrl');
     });
     it('can be disconnected', function(done) {
       supervisor.once('disconnected', function () {

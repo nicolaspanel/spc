@@ -15,6 +15,14 @@ describe('FakeRobot', function () {
   it('should not be initialized', function(){
     robot.isInitialized().should.be.false;
   });
+
+  it('should be able to report its state', function(){
+    robot.state().should.eql({
+      position: 0,//meters
+      speed: 0,
+      atEndStop : false
+    });
+  });
   
   describe('during initialization', function()
   {

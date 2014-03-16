@@ -9,8 +9,8 @@ describe('ParkController', function () {
   beforeEach(function() {
     ctrl = new spc.ParkController();
   });
-  it('should be named \'.park\'', function(){
-    ctrl.name.should.equal('.park');
+  it('should be named \'park-ctrl\'', function(){
+    ctrl.name.should.equal('park-ctrl');
   });
 
   it('should use \'pid-regulator\'', function(){

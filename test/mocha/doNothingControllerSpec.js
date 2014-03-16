@@ -9,8 +9,8 @@ describe('DoNothingController', function () {
   beforeEach(function() {
     ctrl = new spc.DoNothingController();
   });
-  it('should be named \'.do-nothing\'', function(){
-    ctrl.name.should.equal('.do-nothing');
+  it('should be named \'do-nothing-ctrl\'', function(){
+    ctrl.name.should.equal('do-nothing-ctrl');
   });
 
   describe('when receive current position', function() {

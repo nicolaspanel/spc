@@ -10,7 +10,7 @@ angular.module('webApp')
       $scope.model.isLoading = false;
     };
     var updateRobotState = function(data) {
-      $scope.model.position = data.position;
+      $scope.model.position = data.position * 1000;
     };
     $scope.isLoading = true;
 

@@ -1,12 +1,12 @@
 
-x_0 = [0;0]; % initial 
+x_0 = [0.5;0]; % initial 
 
 
 function xdot = f_cust(x, t)
   [A B C] = modelization();
-  expected_x  = [1; 0];
+  expected_x  = [0; 0];
   %u = findK([-5+0i -5+0i]) * (expected_x - x);
-  u = [50    9.9000] * (expected_x - x);
+  u = [50    10] * (expected_x - x);
   if (u > 12)
     u = 12;
   end
