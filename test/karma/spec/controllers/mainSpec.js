@@ -24,19 +24,19 @@ describe('Controller: MainCtrl', function () {
   }));
 
   it('should define the current state to the scope', function () {
-    expect(scope.state).toBeUndefined();
+    expect(scope.model.state).toBeUndefined();
     $httpBackend.flush();
-    expect(scope.state).toBe('connected');
+    expect(scope.model.state).toBe('connected');
   });
   
   it('should define available actions to the scope', function () {
-    expect(scope.availableActions).toBeUndefined();
+    expect(scope.model.availableActions).toBeUndefined();
     $httpBackend.flush();
-    expect(scope.availableActions).toEqual(['park', 'disconnect']);
+    expect(scope.model.availableActions).toEqual(['park', 'disconnect']);
   });
   
   it('should define the curent year', function () {
     var year = new Date().getFullYear();
-    expect(scope.year).toBe(year);
+    expect(scope.model.year).toBe(year);
   });
 });

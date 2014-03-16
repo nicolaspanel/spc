@@ -2,28 +2,28 @@
 
 angular.module('webApp')
   .controller('MainCtrl', function ($scope, $http, socket) {
-    
-    $scope.year = new Date().getFullYear();
+    $scope.model = {};
+    $scope.model.year = new Date().getFullYear();
 
     $scope.isLoading = true;
 
     $http.get('/api/state').success(function(data) {
-      $scope.state = data.state;
-      $scope.availableActions = data.actions;
-      $scope.isLoading = false;
+      $scope.model.state = data.state;
+      $scope.model.availableActions = data.actions;
+      $scope.model.isLoading = false;
     });
     
     
     $scope.executeAction = function(action){
-      $scope.isLoading = true;
+      $scope.model.isLoading = true;
       $http.get('/api/execute?action=' + action).success(function(data) {
         
       });
     };
 
     socket.on('state-changed', function(data) {
-      $scope.state = data.state;
-      $scope.availableActions = data.actions;
-      $scope.isLoading = false;
+      $scope.model.state = data.state;
+      $scope.model.availableActions = data.actions;
+      $scope.model.isLoading = false;
     });
   });
