@@ -1,7 +1,7 @@
 <!-- <div ng-include="'partials/navbar'"></div> -->
 
 <div class="jumbotron">
-  <h1>Smart Position Control</h1>
+  <h2>Smart Position Control</h2>
   <p class="lead">
     Provide optimal position control using Q-Learning agent.
   </p>
@@ -28,16 +28,11 @@
 
 <div class="panel panel-default">
   <div class="panel-heading">
-    <div class="row">Position tracking</div>
+    <div class="row"><span>Position tracking</span></div>
   </div>
-  <nvd3-line-chart
-        data="model.exampleData"
-        tooltips="true"
-        height="300"
-        interactive="true"
-        showXAxis="true"
-        showYAxis="true">
-    </nvd3-line-chart>
+  <canvas smootie-chart
+    data="model.timeSeries" >
+  </canvas >
 </div>
 
 <div class="footer">

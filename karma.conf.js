@@ -24,6 +24,7 @@ module.exports = function(config) {
       'app/bower_components/moment/moment.js',
       'app/bower_components/angularjs-nvd3-directives/dist/angularjs-nvd3-directives.js',
       'app/bower_components/underscore/underscore.js',
+      'app/bower_components/smoothie-bower/smoothie.js',
       'app/scripts/*.js',
       'app/scripts/**/*.js',
       'test/karma/mock/**/*.js',

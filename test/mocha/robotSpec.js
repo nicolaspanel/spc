@@ -24,11 +24,11 @@ describe('Robot', function () {
   });
   
   it('should be able to report its state', function(){
-    robot.state().should.eql({
-      position: 0,//meters
-      speed: '?',
-      atEndStop : false
-    });
+    robot.state().should.have.property('position');
+    robot.state().should.have.property('speed');
+    robot.state().should.have.property('voltage');
+    robot.state().should.have.property('atEndStop');
+    robot.state().should.have.property('datetime');
   });
 
   describe('during initialization', function()

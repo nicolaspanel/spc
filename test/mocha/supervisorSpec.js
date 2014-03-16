@@ -109,6 +109,7 @@ describe('supervisor', function () {
     it('should use ParkController', function() {
       supervisor.controller.name.should.equal('park-ctrl');
     });
+    
     it('can be disconnected', function(done) {
       supervisor.once('disconnected', function () {
         supervisor.state().should.eql('NEWBORN');
@@ -168,7 +169,9 @@ describe('supervisor', function () {
         });
       });
     });
-
+    it('should use the \'track\' controller', function() {
+      supervisor.controller.name.should.eql('track-ctrl');
+    });
     it('can stop tracking', function(done) {
       supervisor.stopTracking(function(){
         supervisor.state().should.eql('PARKED');

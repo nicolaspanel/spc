@@ -19,7 +19,7 @@ describe('Controller: MainCtrl', function () {
       });
     $httpBackend.expectGET('/api/robot-state')
       .respond({
-        position: 1
+        position: 1 //meter
       });
     scope = $rootScope.$new();
     MainCtrl = $controller('MainCtrl', {
@@ -42,7 +42,7 @@ describe('Controller: MainCtrl', function () {
   it('should define robot position to the scope', function () {
     expect(scope.model.position).toBeUndefined();
     $httpBackend.flush();
-    expect(scope.model.position).toEqual(1);
+    expect(scope.model.position).toEqual(1000); // mm
   });
   
   it('should define the curent year', function () {

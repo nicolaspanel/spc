@@ -34,7 +34,9 @@ MockRobot.prototype.state = function() {
   return {
     position: 0,
     speed: 0,
-    atEndStop: false
+    atEndStop: false,
+    voltage: 0,
+    datetime: new Date().getTime()
   };
 };
 
