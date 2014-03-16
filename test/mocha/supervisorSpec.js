@@ -55,6 +55,10 @@ describe('supervisor', function () {
       supervisor.state().should.eql('CONNECTED');
     });
 
+
+    it('should use the \'do-nothing\' controller', function() {
+      supervisor.controller.name.should.eql('do-nothing-ctrl');
+    });
     it('should be able to park', function(done) {
       supervisor.once('parked', function () {
         supervisor.state().should.eql('PARKED');
@@ -62,6 +66,7 @@ describe('supervisor', function () {
       });
       supervisor.park();
     });
+    
     it('can be disconnected', function(done) {
       supervisor.once('disconnected', function () {
         supervisor.state().should.eql('NEWBORN');
@@ -69,7 +74,7 @@ describe('supervisor', function () {
       });
       supervisor.disconnect();
     });
-
+    
   });
 
   describe('when parked', function(){
@@ -79,6 +84,9 @@ describe('supervisor', function () {
           done();
         });
       });
+    });
+    it('should be in parked state', function(){
+      supervisor.state().should.eql('PARKED');
     });
     it('should use ParkController', function() {
       supervisor.controller.name.should.equal('park-ctrl');

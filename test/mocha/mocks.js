@@ -27,6 +27,9 @@ MockRobot.prototype.initialize = function(cb) {
 MockRobot.prototype.isInitialized = function() {
   return false;
 };
+MockRobot.prototype.setVoltage = function(voltage) {
+  
+};
 
 exports.Board = MockBoard;
 exports.Robot = MockRobot;

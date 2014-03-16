@@ -10,15 +10,34 @@ describe('PID regulator', function () {
   beforeEach(function() {
     regulator = new spc.PIDRegulator();
   });
-  it('should define A as a 2x2 matrix', function(){
-    numeric.dim(regulator.A).should.eql([2,2]);
+  
+  it('should have Ki define to 5 by default', function(){
+    regulator.Ki.should.equal(5);
   });
 
-  it('should define B as a 2x1 matrix', function(){
-    numeric.dim(regulator.B).should.eql([2, 1]);
+  it('should have Kp define to 50 by default', function(){
+    regulator.Kp.should.equal(50);
   });
 
-  it('should define C as a 1x2 matrix', function(){
-    numeric.dim(regulator.C).should.eql([1, 2]);
+  it('should have Kd define to 5 by default', function(){
+    regulator.Kd.should.equal(5);
+  });
+
+  it('should have dt define to 50ms by default', function(){
+    regulator.dt.should.equal(50e-3);
+  });
+
+  it('should apply -12V if robot\'s far from park position', function(done){
+    regulator.getVoltage(0.5, 0, function(voltage) {
+      voltage.should.equal(-12);
+      done();
+    });
+  });
+
+  it('should apply position voltage if robot\'s postion is above park position', function(done){
+    regulator.getVoltage(-0.005, 0, function(voltage) {
+      voltage.should.be.greaterThan(0);
+      done();
+    });
   });
 });
