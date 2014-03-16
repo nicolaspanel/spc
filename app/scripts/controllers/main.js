@@ -4,15 +4,22 @@ angular.module('webApp')
   .controller('MainCtrl', function ($scope, $http, socket) {
     $scope.model = {};
     $scope.model.year = new Date().getFullYear();
-
-    $scope.isLoading = true;
-
-    $http.get('/api/state').success(function(data) {
+    var updateState = function(data) {
       $scope.model.state = data.state;
       $scope.model.availableActions = data.actions;
       $scope.model.isLoading = false;
+    };
+    var updateRobotState = function(data) {
+      $scope.model.position = data.position;
+    };
+    $scope.isLoading = true;
+
+    $http.get('/api/state').success(function(data) {
+      updateState(data);
     });
-    
+    $http.get('/api/robot-state').success(function(data) {
+      updateRobotState(data);
+    });
     
     $scope.executeAction = function(action){
       $scope.model.isLoading = true;
@@ -22,8 +29,9 @@ angular.module('webApp')
     };
 
     socket.on('state-changed', function(data) {
-      $scope.model.state = data.state;
-      $scope.model.availableActions = data.actions;
-      $scope.model.isLoading = false;
+      updateState(data);
+    });
+    socket.on('robot-state-changed', function(data) {
+      updateRobotState(data);
     });
   });

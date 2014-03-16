@@ -8,11 +8,16 @@
   <!-- <p><a class="btn btn-lg btn-success" ng-href="#">Splendid!</a></p> -->
 </div>
 <div class="panel panel-default">
-  <div class="panel-heading">System state : <b>{{state}}</b></div>
+  <div class="panel-heading">
+    <div class="row">
+      <div class="col-xs-9"><span>System state : <b>{{model.state}}</b></span> </div> 
+      <div class="col-xs-3"><span>pos : {{model.position}}</span></div> 
+    </div>
+  </div>
   <table class="table">
-    <tr  ng-repeat="action in availableActions"> 
+    <tr  ng-repeat="action in model.availableActions"> 
       <td>
-        <a href="" ng-disabled="isLoading" class="btn btn-sm  btn-{{action.type}}" ng-click="executeAction(action.name)">{{action.name | capitalize}}</a>
+        <a href="" ng-disabled="model.isLoading" class="btn btn-sm  btn-{{action.type}}" ng-click="executeAction(action.name)">{{action.name | capitalize}}</a>
       </td> 
       <td>
         <span>{{action.description}}</span>
@@ -22,5 +27,5 @@
 </div>
 
 <div class="footer">
-  <p>© {{year}} Nicolas Panel</p>
+  <p>© {{model.year}} Nicolas Panel</p>
 </div>

@@ -17,6 +17,10 @@ describe('Controller: MainCtrl', function () {
         state: 'connected',
         actions: ['park', 'disconnect']
       });
+    $httpBackend.expectGET('/api/robot-state')
+      .respond({
+        position: 1
+      });
     scope = $rootScope.$new();
     MainCtrl = $controller('MainCtrl', {
       $scope: scope
@@ -33,6 +37,12 @@ describe('Controller: MainCtrl', function () {
     expect(scope.model.availableActions).toBeUndefined();
     $httpBackend.flush();
     expect(scope.model.availableActions).toEqual(['park', 'disconnect']);
+  });
+
+  it('should define robot position to the scope', function () {
+    expect(scope.model.position).toBeUndefined();
+    $httpBackend.flush();
+    expect(scope.model.position).toEqual(1);
   });
   
   it('should define the curent year', function () {
