@@ -4,6 +4,24 @@ angular.module('webApp')
   .controller('MainCtrl', function ($scope, $http, socket) {
     $scope.model = {};
     $scope.model.year = new Date().getFullYear();
+    
+    $scope.xAxisTickFormatFunction = function(){
+      return function(d){
+        return d3.time.format('%x')(new Date(d)); //uncomment for date format
+      };
+    };
+
+    $scope.model.exampleData = [{
+      key: 'Position',
+      values: [[0, 50], [1, 45]]
+    },{
+      key: 'Speed',
+      values: []
+    },{
+      key: 'Voltage',
+      values: []
+    }];
+
     var updateState = function(data) {
       $scope.model.state = data.state;
       $scope.model.availableActions = data.actions;

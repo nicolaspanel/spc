@@ -26,6 +26,20 @@
   </table>
 </div>
 
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <div class="row">Position tracking</div>
+  </div>
+  <nvd3-line-chart
+        data="model.exampleData"
+        tooltips="true"
+        height="300"
+        interactive="true"
+        showXAxis="true"
+        showYAxis="true">
+    </nvd3-line-chart>
+</div>
+
 <div class="footer">
   <p>© {{model.year}} Nicolas Panel</p>
 </div>
