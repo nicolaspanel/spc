@@ -5,10 +5,9 @@ angular.module('webApp')
     
     $scope.model = {};
     $scope.model.year = new Date().getFullYear();
-    $scope.model.timeSeries = [
-      new TimeSeries(),
-      new TimeSeries()
-    ];
+    $scope.model.positionsSerie = new TimeSeries();
+    $scope.model.speedsSerie = new TimeSeries();
+    $scope.model.voltageSerie = new TimeSeries();
     // $scope.xAxisTickFormatFunction = function(){
     //   return function(d){
     //     return d3.time.format('%x')(new Date(d)); //uncomment for date format
@@ -42,7 +41,8 @@ angular.module('webApp')
     });
     socket.on('robot-state-changed', function(data) {
       $scope.model.position = data.position * 1000;
-      $scope.model.timeSeries[0].append(data.datetime, data.position * 1000);
-      console.log(data.position);
+      $scope.model.positionsSerie.append(data.datetime, data.position * 1000);
+      $scope.model.speedsSerie.append(data.datetime, data.speed);
+      $scope.model.voltageSerie.append(data.datetime, data.voltage);
     });
   });

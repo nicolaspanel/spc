@@ -20,7 +20,6 @@ describe('FakeRobot', function () {
     robot.state().should.have.property('position');
     robot.state().should.have.property('speed');
     robot.state().should.have.property('voltage');
-    robot.state().should.have.property('atEndStop');
     robot.state().should.have.property('datetime');
   });
   
