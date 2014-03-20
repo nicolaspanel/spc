@@ -13,7 +13,6 @@
     "stately.js": "~1.2.0",
     "string": "~1.8.0",
     "socket.io": "~0.9.16",
-    "firmata": "~0.3.3",
     "numeric": "~1.2.6"
   },
   "devDependencies": {
