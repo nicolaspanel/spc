@@ -21,6 +21,7 @@ describe('Controller: MainCtrl', function () {
       .respond({
         position: 1 //meter
       });
+    $httpBackend.whenGET('/api/updateTarget?target=0').respond({});
     scope = $rootScope.$new();
     MainCtrl = $controller('MainCtrl', {
       $scope: scope
@@ -48,5 +49,10 @@ describe('Controller: MainCtrl', function () {
   it('should define the curent year', function () {
     var year = new Date().getFullYear();
     expect(scope.model.year).toBe(year);
+  });
+
+  it('should define the current target to the scope', function () {
+    $httpBackend.flush();
+    expect(scope.model.target).toBe(0);
   });
 });
