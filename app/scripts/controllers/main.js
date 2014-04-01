@@ -6,8 +6,9 @@ angular.module('webApp')
     $scope.model = {};
     $scope.model.year = new Date().getFullYear();
     $scope.model.positionsSerie = new TimeSeries();
-    $scope.model.speedsSerie = new TimeSeries();
-    $scope.model.voltageSerie = new TimeSeries();
+    $scope.model.target = 0;
+    $scope.model.isTracking = false;
+  
     // $scope.xAxisTickFormatFunction = function(){
     //   return function(d){
     //     return d3.time.format('%x')(new Date(d)); //uncomment for date format
@@ -18,6 +19,10 @@ angular.module('webApp')
       $scope.model.state = data.state;
       $scope.model.availableActions = data.actions;
       $scope.model.isLoading = false;
+      $scope.model.isTracking = data.state === 'Tracking';
+    };
+    var updateTarget = function(){
+      $http.get('/api/updateTarget?target=' + $scope.model.target / 1000).success(function(data) { });
     };
     
     $scope.isLoading = true;
@@ -31,9 +36,7 @@ angular.module('webApp')
     
     $scope.executeAction = function(action){
       $scope.model.isLoading = true;
-      $http.get('/api/execute?action=' + action).success(function(data) {
-        
-      });
+      $http.get('/api/execute?action=' + action).success(function(data) {});
     };
 
     socket.on('state-changed', function(data) {
@@ -42,7 +45,9 @@ angular.module('webApp')
     socket.on('robot-state-changed', function(data) {
       $scope.model.position = data.position * 1000;
       $scope.model.positionsSerie.append(data.datetime, data.position * 1000);
-      $scope.model.speedsSerie.append(data.datetime, data.speed);
-      $scope.model.voltageSerie.append(data.datetime, data.voltage);
+    });
+
+    $scope.$watch('model.target', function(){
+      updateTarget();
     });
   });

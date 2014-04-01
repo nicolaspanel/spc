@@ -145,7 +145,7 @@ describe('supervisor', function () {
     });
 
     it('can stop training', function(done) {
-      supervisor.stopTraining(function(){
+      supervisor.park(function(){
         supervisor.state().should.eql('PARKED');
         done();
       });
@@ -172,8 +172,13 @@ describe('supervisor', function () {
     it('should use the \'track\' controller', function() {
       supervisor.controller.name.should.eql('track-ctrl');
     });
+    it('should be able to update the target', function() {
+      var spy = sinon.spy(supervisor.controller, 'updateTarget');
+      supervisor.setTarget(1);
+      spy.calledWith(1).should.be.true;
+    });
     it('can stop tracking', function(done) {
-      supervisor.stopTracking(function(){
+      supervisor.park(function(){
         supervisor.state().should.eql('PARKED');
         done();
       });
@@ -184,7 +189,6 @@ describe('supervisor', function () {
         done();
       });
     });
-
   });
 
 });
